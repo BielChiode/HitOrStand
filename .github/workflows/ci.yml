@@ -1,0 +1,41 @@
+name: Node.js CI
+
+on:
+  push:
+    branches:
+      - main # Executar CI quando um push é feito para a branch main
+  pull_request: # Executar CI quando uma pull request é aberta ou atualizada
+    branches:
+      - main
+
+jobs:
+  install_dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+        working-directory: ./ # Definir o diretório de trabalho para a raiz do projeto
+
+  test:
+    runs-on: ubuntu-latest
+    needs: install_dependencies
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+        working-directory: ./ # Definir o diretório de trabalho para a raiz do projeto
+
+      - name: Run tests with coverage
+        run: npm test -- --coverage
+        working-directory: ./ # Definir o diretório de trabalho para a raiz do projeto
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage-report
+          path: coverage/ # Caminho para o diretório de relatórios de cobertura de teste
