@@ -2,39 +2,45 @@ import React from 'react'
 import {
   Alert,
   Modal,
-  Pressable,
   StyleSheet,
   Text,
   TouchableOpacity,
   View
 } from 'react-native'
+import PropTypes from 'prop-types'
+import { StackActions } from '@react-navigation/native'
 
-function WinnerModal({ modalVisible, setModalVisible }) {
+function WinnerModal({ navigation, modal, setModal }) {
   return (
     <Modal
       animationType="slide"
       transparent={true}
-      visible={modalVisible}
+      visible={modal.visible}
       onRequestClose={() => {
-        Alert.alert('Modal has been closed.')
-        setModalVisible(!modalVisible)
+        setModal({ visible: !modal.visible, winnerText: null })
       }}
       style={styles.modal}
     >
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-          <Text style={styles.modalText}>Dealer ganhou</Text>
+          <Text style={styles.modalText}>{modal.winnerText}</Text>
           <Text style={styles.modalText}>Deseja iniciar um novo jogo ?</Text>
           <View style={styles.buttonsContainer}>
             <TouchableOpacity
               style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
+              onPress={() => {
+                setModal({ visible: !modal.visible, winnerText: null })
+                navigation.navigate('Home')
+              }}
             >
               <Text style={styles.textStyle}>Fechar</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.button, styles.buttonRestart]}
-              onPress={() => setModalVisible(!modalVisible)}
+              onPress={() => {
+                setModal({ visible: !modal.visible, winnerText: null })
+                navigation.dispatch(StackActions.replace('Game'))
+              }}
             >
               <Text style={styles.textStyle}>Reiniciar</Text>
             </TouchableOpacity>
@@ -43,6 +49,18 @@ function WinnerModal({ modalVisible, setModalVisible }) {
       </View>
     </Modal>
   )
+}
+
+WinnerModal.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+    dispatch: PropTypes.func
+  }).isRequired,
+  modal: PropTypes.shape({
+    visible: PropTypes.bool,
+    winnerText: PropTypes.string
+  }).isRequired,
+  setModal: PropTypes.func.isRequired
 }
 
 const styles = StyleSheet.create({
@@ -57,7 +75,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     width: '70%',
-    height: 200,
+    height: 250,
     margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,

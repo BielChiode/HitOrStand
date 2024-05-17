@@ -1,8 +1,11 @@
 import React from 'react'
-import { Image, StyleSheet, View } from 'react-native'
+import { Image, StyleSheet, Text, View } from 'react-native'
+import PropTypes from 'prop-types'
+import sumPoints from '../utils/sumPoints'
 import { Icon } from 'react-native-elements'
 
 function Dealer({ dealer, stand }) {
+  const points = sumPoints(dealer)
   return (
     <View style={styles.dealerContainer}>
       <View style={styles.dealerCardsContainer}>
@@ -30,17 +33,21 @@ function Dealer({ dealer, stand }) {
           )}
       </View>
       <View style={styles.dealerAvatar}>
-        {/* <Text style={styles.textPoints}>Pontos: {pontos}</Text> */}
+        {stand && <Text style={styles.textPoints}>Pontos: {points}</Text>}
         <Icon
           raised
           name="user"
           type="font-awesome"
           color="#E84233"
-          onPress={() => console.log('hello')}
         />
       </View>
     </View>
   )
+}
+
+Dealer.propTypes = {
+  dealer: PropTypes.array.isRequired,
+  stand: PropTypes.bool.isRequired
 }
 
 export default Dealer

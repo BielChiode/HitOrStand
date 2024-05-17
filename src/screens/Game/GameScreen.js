@@ -14,14 +14,19 @@ import getCards from '../../api/getCards'
 import Toast from 'react-native-toast-message'
 import sumPoints from '../../utils/sumPoints'
 import WinnerModal from '../../components/WinnerModal'
+import PropTypes from 'prop-types'
+import { StackActions } from '@react-navigation/native'
 
-function GameScreen() {
+function GameScreen({ navigation }) {
   const [deck, setDeck] = useState(null)
   const [dealer, setDealer] = useState(null)
   const [player, setPlayer] = useState(null)
   const [loadingHit, setLoadingHit] = useState(false)
   const [stand, setStand] = useState(false)
-  const [modalVisible, setModalVisible] = useState(false)
+  const [modal, setModal] = useState({
+    visible: false,
+    winnerText: null
+  })
 
   const { data, loading, error } = useGetDeck()
 
@@ -41,13 +46,21 @@ function GameScreen() {
     }
   }, [data, cards])
 
+  useEffect(() => {
+    if (player)
+      if (sumPoints(player) > 21)
+        handleStand('Dealer ganhou! Player excedeu o máximo de pontos')
+    if (dealer)
+      if (sumPoints(dealer) > 21)
+        handleStand('Player ganhou! Dealer excedeu o máximo de pontos')
+  }, [player, dealer])
+
   const handleHit = async () => {
     setLoadingHit(true)
     let pointsDealer = sumPoints(dealer)
     let nCards = pointsDealer >= 17 ? 1 : 2
     try {
       const newCard = await getCards(deck.deck_id, nCards)
-      console.log('newCard', newCard)
       setPlayer([...player, newCard.cards[0]])
       if (nCards > 1) {
         setDealer([...dealer, newCard.cards[1]])
@@ -55,22 +68,7 @@ function GameScreen() {
     } catch (e) {
       Toast.show({
         type: 'error',
-        text1: e,
-        topOffset: 60
-      })
-    } finally {
-      setLoadingHit(false)
-    }
-  }
-  const handleHitDealer = async () => {
-    setLoadingHit(true)
-    try {
-      const newCard = await getCards(deck.deck_id, 1)
-      setDealer([...dealer, ...newCard.cards])
-    } catch (e) {
-      Toast.show({
-        type: 'error',
-        text1: e,
+        text1: 'Não foi possível distribuir cartas, tente novamente',
         topOffset: 60
       })
     } finally {
@@ -78,16 +76,18 @@ function GameScreen() {
     }
   }
 
-  const handleStand = () => {
+  const handleStand = (winnerText) => {
     setStand(true)
-    // Toast.show({
-    //   type: 'success',
-    //   text1: 'Hello',
-    //   topOffset: 60
-    // })
-    setModalVisible(true)
+    if (winnerText) return setModal({ visible: true, winnerText })
+    let pointsDealer = sumPoints(dealer)
+    let pointsPlayer = sumPoints(player)
+    if (pointsPlayer > pointsDealer)
+      setModal({ visible: true, winnerText: 'Player ganhou!' })
+    else if (pointsDealer > pointsPlayer)
+      setModal({ visible: true, winnerText: 'Dealer ganhou!' })
+    else if (pointsDealer == pointsPlayer)
+      setModal({ visible: true, winnerText: 'Empate!' })
   }
-  console.log('player', player)
 
   return (
     <View style={styles.container}>
@@ -101,9 +101,21 @@ function GameScreen() {
             color="#FFF"
           />
         </View>
+      ) : error || errorCards ? (
+        <View style={styles.gameContainer}>
+          <Text style={styles.infoText}>
+            Houve um erro ao distribuir as cartas
+          </Text>
+          <TouchableOpacity
+            onPress={() => navigation.dispatch(StackActions.replace('Game'))}
+            style={[styles.button, { width: 250 }]}
+          >
+            <Text style={styles.buttonText}>Tentar novamente</Text>
+          </TouchableOpacity>
+        </View>
       ) : (
         <View style={styles.gameContainer}>
-          <Dealer dealer={dealer} stand={stand} />
+          {dealer && <Dealer dealer={dealer} stand={stand} />}
 
           <Text style={styles.infoText}>Selecione sua próxima ação</Text>
           <View style={styles.buttonsContainer}>
@@ -114,22 +126,34 @@ function GameScreen() {
             >
               <Text style={styles.buttonText}>HIT</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleStand} style={styles.button}>
+            <TouchableOpacity
+              onPress={() => handleStand('')}
+              style={styles.button}
+            >
               <Text style={styles.buttonText}>STAND</Text>
             </TouchableOpacity>
           </View>
 
-          <Player player={player} />
-          {modalVisible && (
+          {player && <Player player={player} />}
+
+          {modal.visible && (
             <WinnerModal
-              modalVisible={modalVisible}
-              setModalVisible={setModalVisible}
+              navigation={navigation}
+              modal={modal}
+              setModal={setModal}
             />
           )}
         </View>
       )}
     </View>
   )
+}
+
+GameScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+    dispatch: PropTypes.func
+  }).isRequired
 }
 
 export default GameScreen

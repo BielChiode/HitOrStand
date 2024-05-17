@@ -1,0 +1,260 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dealer Deveria renderizar corretamente com as cartas e uma carta virada para baixo 1`] = `
+<View
+  style={
+    {
+      "position": "absolute",
+      "top": 0,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "justifyContent": "flex-end",
+        "marginTop": 16,
+        "width": "100%",
+      }
+    }
+  >
+    <Image
+      source={
+        {
+          "uri": "https://deckofcardsapi.com/static/img/back.png",
+        }
+      }
+      style={
+        {
+          "height": 150,
+          "width": 110,
+        }
+      }
+    />
+    <Image
+      source={
+        {
+          "uri": "https://deckofcardsapi.com/static/img/4C.png",
+        }
+      }
+      style={
+        [
+          {
+            "height": 150,
+            "width": 110,
+          },
+          {
+            "marginLeft": -50,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "flex-end",
+        "marginTop": 10,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "borderRadius": 28,
+          "height": 52,
+          "margin": 7,
+          "overflow": "hidden",
+          "shadowColor": "rgba(0,0,0, .4)",
+          "shadowOffset": {
+            "height": 1,
+            "width": 1,
+          },
+          "shadowOpacity": 1,
+          "shadowRadius": 1,
+          "width": 52,
+        }
+      }
+    >
+      <View>
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "backgroundColor": "#ffffff",
+              "borderRadius": 28,
+              "height": 52,
+              "justifyContent": "center",
+              "width": 52,
+            }
+          }
+        >
+          <Text
+            allowFontScaling={false}
+            selectable={false}
+            style={
+              [
+                {
+                  "color": "#E84233",
+                  "fontSize": 24,
+                },
+                {
+                  "backgroundColor": "transparent",
+                },
+                {
+                  "fontFamily": "FontAwesome",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                {},
+              ]
+            }
+            testID="iconIcon"
+          >
+            
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`Dealer Deveria renderizar corretamente com as cartas viradas para cima e com pontos 1`] = `
+<View
+  style={
+    {
+      "position": "absolute",
+      "top": 0,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "justifyContent": "flex-end",
+        "marginTop": 16,
+        "width": "100%",
+      }
+    }
+  >
+    <Image
+      source={
+        {
+          "uri": "https://deckofcardsapi.com/static/img/5D.png",
+        }
+      }
+      style={
+        {
+          "height": 150,
+          "width": 110,
+        }
+      }
+    />
+    <Image
+      source={
+        {
+          "uri": "https://deckofcardsapi.com/static/img/4C.png",
+        }
+      }
+      style={
+        [
+          {
+            "height": 150,
+            "width": 110,
+          },
+          {
+            "marginLeft": -50,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "flex-end",
+        "marginTop": 10,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "color": "#FFF",
+          "fontSize": 20,
+          "fontWeight": "600",
+          "marginLeft": 10,
+        }
+      }
+    >
+      Pontos: 
+      9
+    </Text>
+    <View
+      style={
+        {
+          "borderRadius": 28,
+          "height": 52,
+          "margin": 7,
+          "overflow": "hidden",
+          "shadowColor": "rgba(0,0,0, .4)",
+          "shadowOffset": {
+            "height": 1,
+            "width": 1,
+          },
+          "shadowOpacity": 1,
+          "shadowRadius": 1,
+          "width": 52,
+        }
+      }
+    >
+      <View>
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "backgroundColor": "#ffffff",
+              "borderRadius": 28,
+              "height": 52,
+              "justifyContent": "center",
+              "width": 52,
+            }
+          }
+        >
+          <Text
+            allowFontScaling={false}
+            selectable={false}
+            style={
+              [
+                {
+                  "color": "#E84233",
+                  "fontSize": 24,
+                },
+                {
+                  "backgroundColor": "transparent",
+                },
+                {
+                  "fontFamily": "FontAwesome",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                {},
+              ]
+            }
+            testID="iconIcon"
+          >
+            
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;

@@ -3,12 +3,13 @@ import getCards from '../getCards'
 
 export function useGetCards(deckId, count) {
   const [data, setData] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
       if (!deckId) return
+      setLoading(true)
       try {
         const responseData = await getCards(deckId, count)
         setData(responseData)
