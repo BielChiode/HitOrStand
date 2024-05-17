@@ -14,6 +14,7 @@ export default function HomeScreen({ navigation }) {
           title="Iniciar jogo"
           color="#99CFBD"
           accessibilityLabel="Iniciar jogo"
+          testID="inicia-jogo"
         />
       </View>
     </View>

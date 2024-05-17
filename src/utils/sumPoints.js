@@ -1,4 +1,4 @@
-export default function somaPontos(cards) {
+export default function sumPoints(cards) {
   let cardsReformados = cards
   cards.map((card, index) => {
     if (card.value === 'ACE') cardsReformados[index].value = 1

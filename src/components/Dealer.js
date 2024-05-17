@@ -1,10 +1,8 @@
 import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, View } from 'react-native'
 import { Icon } from 'react-native-elements'
-import somaPontos from '../utils/somaPontos'
 
-function Dealer({ dealer }) {
-  const pontos = somaPontos(dealer)
+function Dealer({ dealer, stand }) {
   return (
     <View style={styles.dealerContainer}>
       <View style={styles.dealerCardsContainer}>
@@ -15,13 +13,15 @@ function Dealer({ dealer }) {
                 key={index}
                 style={styles.cardImage}
                 source={{
-                  uri: 'https://deckofcardsapi.com/static/img/back.png'
+                  uri: stand
+                    ? card.image
+                    : 'https://deckofcardsapi.com/static/img/back.png'
                 }}
               />
             ) : (
               <Image
                 key={index}
-                style={[styles.cardImage, { marginLeft: -40 }]}
+                style={[styles.cardImage, { marginLeft: -50 }]}
                 source={{
                   uri: card.image
                 }}
@@ -30,12 +30,12 @@ function Dealer({ dealer }) {
           )}
       </View>
       <View style={styles.dealerAvatar}>
-        <Text style={styles.textPoints}>Pontos: {pontos}</Text>
+        {/* <Text style={styles.textPoints}>Pontos: {pontos}</Text> */}
         <Icon
           raised
           name="user"
           type="font-awesome"
-          color="#f50"
+          color="#E84233"
           onPress={() => console.log('hello')}
         />
       </View>

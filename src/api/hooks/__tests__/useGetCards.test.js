@@ -38,7 +38,7 @@ describe('useGetCards', () => {
     const { result } = renderHook(() => useGetCards())
 
     waitFor(() => {
-      expect(result.current.data).toEqual(respostaEsperada)
+      expect(result.current.data).toBe(respostaEsperada)
       expect(result.current.loading).toBe(false)
       expect(result.current.error).toBe(null)
     })
@@ -47,7 +47,7 @@ describe('useGetCards', () => {
     const { result } = renderHook(() => useGetCards())
 
     waitFor(() => {
-      expect(result.current.data).toEqual(null)
+      expect(result.current.data).toBe(null)
       expect(result.current.loading).toBe(true)
       expect(result.current.error).toBe(null)
     })

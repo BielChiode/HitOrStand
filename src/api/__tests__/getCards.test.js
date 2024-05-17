@@ -46,7 +46,7 @@ describe('getCards', () => {
         })
       })
     )
-    expect(cards).toEqual(respostaEsperada)
+    expect(cards).toBe(respostaEsperada)
   })
 
   it('deve lidar com erros ao buscar', async () => {

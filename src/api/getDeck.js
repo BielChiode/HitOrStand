@@ -10,7 +10,6 @@ export default async function getDeck() {
     }
   }
   const response = await fetch(url, init)
-  console.log(response)
   if (!response.ok) {
     throw new Error(`Erro ao tentar buscar deck`)
   }

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {
   ActivityIndicator,
-  Button,
-  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -12,11 +10,18 @@ import { useGetDeck } from '../../api/hooks/useGetDeck'
 import { useGetCards } from '../../api/hooks/useGetCards'
 import Player from '../../components/Player'
 import Dealer from '../../components/Dealer'
+import getCards from '../../api/getCards'
+import Toast from 'react-native-toast-message'
+import sumPoints from '../../utils/sumPoints'
+import WinnerModal from '../../components/WinnerModal'
 
 function GameScreen() {
   const [deck, setDeck] = useState(null)
   const [dealer, setDealer] = useState(null)
   const [player, setPlayer] = useState(null)
+  const [loadingHit, setLoadingHit] = useState(false)
+  const [stand, setStand] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
 
   const { data, loading, error } = useGetDeck()
 
@@ -36,9 +41,54 @@ function GameScreen() {
     }
   }, [data, cards])
 
+  const handleHit = async () => {
+    setLoadingHit(true)
+    let pointsDealer = sumPoints(dealer)
+    let nCards = pointsDealer >= 17 ? 1 : 2
+    try {
+      const newCard = await getCards(deck.deck_id, nCards)
+      console.log('newCard', newCard)
+      setPlayer([...player, newCard.cards[0]])
+      if (nCards > 1) {
+        setDealer([...dealer, newCard.cards[1]])
+      }
+    } catch (e) {
+      Toast.show({
+        type: 'error',
+        text1: e,
+        topOffset: 60
+      })
+    } finally {
+      setLoadingHit(false)
+    }
+  }
+  const handleHitDealer = async () => {
+    setLoadingHit(true)
+    try {
+      const newCard = await getCards(deck.deck_id, 1)
+      setDealer([...dealer, ...newCard.cards])
+    } catch (e) {
+      Toast.show({
+        type: 'error',
+        text1: e,
+        topOffset: 60
+      })
+    } finally {
+      setLoadingHit(false)
+    }
+  }
+
+  const handleStand = () => {
+    setStand(true)
+    // Toast.show({
+    //   type: 'success',
+    //   text1: 'Hello',
+    //   topOffset: 60
+    // })
+    setModalVisible(true)
+  }
   console.log('player', player)
-  console.log('dealer', dealer)
-  console.log(deck)
+
   return (
     <View style={styles.container}>
       {loading || loadingCard ? (
@@ -53,52 +103,34 @@ function GameScreen() {
         </View>
       ) : (
         <View style={styles.gameContainer}>
-          <Dealer dealer={dealer} />
+          <Dealer dealer={dealer} stand={stand} />
 
+          <Text style={styles.infoText}>Selecione sua próxima ação</Text>
           <View style={styles.buttonsContainer}>
             <TouchableOpacity
-              onPress={() => console.log('Hit')}
+              disabled={loadingHit}
+              onPress={handleHit}
               style={styles.button}
             >
               <Text style={styles.buttonText}>HIT</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => console.log('STAND')}
-              style={styles.button}
-            >
+            <TouchableOpacity onPress={handleStand} style={styles.button}>
               <Text style={styles.buttonText}>STAND</Text>
             </TouchableOpacity>
           </View>
 
           <Player player={player} />
+          {modalVisible && (
+            <WinnerModal
+              modalVisible={modalVisible}
+              setModalVisible={setModalVisible}
+            />
+          )}
         </View>
       )}
     </View>
   )
 }
-
-// [
-//   {
-//     code: '2H',
-//     image: 'https://deckofcardsapi.com/static/img/2H.png',
-//     images: {
-//       png: 'https://deckofcardsapi.com/static/img/2H.png',
-//       svg: 'https://deckofcardsapi.com/static/img/2H.svg'
-//     },
-//     suit: 'HEARTS',
-//     value: '2'
-//   },
-//   {
-//     code: '8S',
-//     image: 'https://deckofcardsapi.com/static/img/8S.png',
-//     images: {
-//       png: 'https://deckofcardsapi.com/static/img/8S.png',
-//       svg: 'https://deckofcardsapi.com/static/img/8S.svg'
-//     },
-//     suit: 'SPADES',
-//     value: '8'
-//   }
-// ]
 
 export default GameScreen
 
@@ -120,16 +152,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  infoText: {
+    fontSize: 16,
+    color: '#FFF',
+    marginBottom: 10
+  },
   buttonsContainer: {
     width: '100%',
     height: 80,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 60,
-    borderWidth: 2
+    elevation: 10,
+    paddingHorizontal: 30
   },
   button: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#FABD07',
+    width: 120,
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
@@ -138,7 +176,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#FFFFFF',
-    textAlign: 'center', // Alinha o texto ao centro do botão
-    fontWeight: 'bold'
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 20
   }
 })
