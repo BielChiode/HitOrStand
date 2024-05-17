@@ -1,10 +1,11 @@
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import { Icon } from 'react-native-elements'
-import somaPontos from '../utils/somaPontos'
+import sumPoints from '../utils/sumPoints'
 
 function Player({ player }) {
-  const pontos = somaPontos(player)
+  const pontos = sumPoints(player)
+
   return (
     <View style={styles.playerContainer}>
       <View style={styles.dealerAvatar}>
@@ -12,7 +13,7 @@ function Player({ player }) {
           raised
           name="user"
           type="font-awesome"
-          color="#f50"
+          color="#99CFBD"
           onPress={() => console.log('hello')}
         />
         <Text style={styles.textPoints}>Pontos: {pontos}</Text>
@@ -22,7 +23,7 @@ function Player({ player }) {
           player.map((card, index) => (
             <Image
               key={index}
-              style={[styles.cardImage, { marginLeft: index !== 0 ? -40 : 0 }]}
+              style={[styles.cardImage, { marginLeft: index !== 0 ? -50 : 0 }]}
               source={{
                 uri: card.image
               }}
