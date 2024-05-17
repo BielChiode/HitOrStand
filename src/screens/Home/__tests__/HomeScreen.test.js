@@ -6,7 +6,7 @@ describe('Home', () => {
   afterEach(() => jest.resetAllMocks())
   it('Deveria renderizar corretamente', () => {
     const { toJSON } = render(<HomeScreen navigation={navigationMock} />)
-    expect(toJSON).toMatchSnapshot()
+    expect(toJSON()).toMatchSnapshot()
   })
   it('Deveria levar para a página do jogo', () => {
     const { getByTestId } = render(<HomeScreen navigation={navigationMock} />)

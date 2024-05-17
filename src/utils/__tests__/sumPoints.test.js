@@ -1,6 +1,10 @@
 import sumPoints from '../sumPoints'
 
 describe('sumPoints', () => {
+  it('retorna se não vier cards', () => {
+    const cards = null
+    expect(sumPoints(cards)).toBe(undefined)
+  })
   it('soma corretamente os valores das cartas sem as cartas especiais', () => {
     const cards = [{ value: '2' }, { value: '3' }, { value: '4' }]
     expect(sumPoints(cards)).toBe(9)
@@ -18,12 +22,12 @@ describe('sumPoints', () => {
 
   it('converte corretamente o valor da carta "QUEEN"', () => {
     const cards = [{ value: 'QUEEN' }]
-    expect(sumPoints(cards)).toBe(11)
+    expect(sumPoints(cards)).toBe(10)
   })
 
   it('converte corretamente o valor da carta "KING"', () => {
     const cards = [{ value: 'KING' }]
-    expect(sumPoints(cards)).toBe(12)
+    expect(sumPoints(cards)).toBe(10)
   })
 
   it('soma corretamente os valores das cartas com cartas especiais', () => {
@@ -33,6 +37,6 @@ describe('sumPoints', () => {
       { value: 'JACK' },
       { value: 'KING' }
     ]
-    expect(sumPoints(cards)).toBe(25)
+    expect(sumPoints(cards)).toBe(23)
   })
 })

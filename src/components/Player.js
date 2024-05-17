@@ -2,21 +2,16 @@ import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import { Icon } from 'react-native-elements'
 import sumPoints from '../utils/sumPoints'
+import PropTypes from 'prop-types'
 
 function Player({ player }) {
-  const pontos = sumPoints(player)
+  const points = sumPoints(player)
 
   return (
     <View style={styles.playerContainer}>
       <View style={styles.dealerAvatar}>
-        <Icon
-          raised
-          name="user"
-          type="font-awesome"
-          color="#99CFBD"
-          onPress={() => console.log('hello')}
-        />
-        <Text style={styles.textPoints}>Pontos: {pontos}</Text>
+        <Icon raised name="user" type="font-awesome" color="#99CFBD" />
+        <Text style={styles.textPoints}>Pontos: {points}</Text>
       </View>
       <View style={styles.playerCardsContainer}>
         {player &&
@@ -32,6 +27,10 @@ function Player({ player }) {
       </View>
     </View>
   )
+}
+
+Player.propTypes = {
+  player: PropTypes.array.isRequired
 }
 
 export default Player

@@ -35,7 +35,7 @@ describe('useGetCards', () => {
   it('Deve retornar os dados com sucesso', async () => {
     getCards.mockResolvedValue(respostaEsperada)
 
-    const { result } = renderHook(() => useGetCards())
+    const { result } = renderHook(() => useGetCards('123', 2))
 
     waitFor(() => {
       expect(result.current.data).toBe(respostaEsperada)
@@ -44,7 +44,7 @@ describe('useGetCards', () => {
     })
   })
   it('Deve retornar que esta carregando', async () => {
-    const { result } = renderHook(() => useGetCards())
+    const { result } = renderHook(() => useGetCards('123', 2))
 
     waitFor(() => {
       expect(result.current.data).toBe(null)
@@ -56,7 +56,7 @@ describe('useGetCards', () => {
   it('deve lidar com erros', async () => {
     getCards.mockRejectedValue(new Error('Erro ao tentar buscar cartas'))
 
-    const { result } = renderHook(() => useGetCards())
+    const { result } = renderHook(() => useGetCards('123', 2))
 
     waitFor(() => {
       expect(result.current.data).toBe(null)
