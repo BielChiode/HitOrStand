@@ -36,6 +36,8 @@ Antes de começar, você precisará ter o seguinte instalado no seu computador:
 - **`npm run android`**: Inicia o aplicativo no emulador Android.
 - **`npm run ios`**: Inicia o aplicativo no emulador iOS (necessário macOS).
 - **`npm test`**: Executa os testes da aplicação.
+- **`npm run coverage`**: Executa os testes e mostra a cobertura de testes.
+- **`npm run test_watch`**: Executa os testes em modo de monitoramento.
 
 ## Estrutura do Projeto
 ├── assets              # Imagens e outros recursos estáticos
