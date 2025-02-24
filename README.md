@@ -1,69 +1,63 @@
 # Hit or Stand Game
 
-## Descrição
+## Description
 
-Este é um aplicativo do jogo blackjack (21), desenvolvido com React Native e Expo. O objetivo do jogo é adicionar cartas para o jogador e o dealer, acumulando pontos conforme as regras do jogo.
+This is a blackjack (21) game application, developed with React Native and Expo. The goal of the game is to add cards for the player and the dealer, accumulating points according to the game rules.
 
-## Pré-requisitos
+## Prerequisites
 
-Antes de começar, você precisará ter o seguinte instalado no seu computador:
+Before getting started, you need to have the following installed on your computer:
 
-- [Node.js](https://nodejs.org/) (recomendado a versão LTS)
+- [Node.js](https://nodejs.org/) (LTS version recommended)
 - [Expo CLI](https://docs.expo.dev/get-started/installation/)
 
-## Instalação
+## Installation
 
-1. **Clone o repositório**
+1. **Clone the repository**
    ```sh
-   git clone https://github.com/seu-usuario/seu-repositorio.git
-   cd seu-repositorio
+   git clone https://github.com/your-user/your-repository.git
+   cd your-repository
    ```
-2. **Instale as dependências**
+2. **Install dependencies**
    ```sh
    npm install
    ```
-3. **Execute o projeto**
+3. **Run the project**
    ```sh
    expo start
    ```
-4. **Abra o aplicativo no dispositivo ou emulador**
+4. **Open the app on a device or emulator**
 
-- No dispositivo físico: Baixe o aplicativo Expo Go da App Store ou Google Play e escaneie o QR code exibido no navegador.
-- No emulador: Siga as instruções no terminal para iniciar o emulador Android/iOS.
+- On a physical device: Download the Expo Go app from the App Store or Google Play and scan the QR code displayed in the browser.
+- On an emulator: Follow the terminal instructions to start the Android/iOS emulator.
 
-## Scripts Disponíveis
+## Available Scripts
 
-- **`npm start`**: Inicia o servidor de desenvolvimento do Expo.
-- **`npm run android`**: Inicia o aplicativo no emulador Android.
-- **`npm run ios`**: Inicia o aplicativo no emulador iOS (necessário macOS).
-- **`npm test`**: Executa os testes da aplicação.
-- **`npm run coverage`**: Executa os testes e mostra a cobertura de testes.
-- **`npm run test_watch`**: Executa os testes em modo de monitoramento.
+- **`npm start`**: Starts the Expo development server.
+- **`npm run android`**: Runs the app on an Android emulator.
+- **`npm run ios`**: Runs the app on an iOS emulator (macOS required).
+- **`npm test`**: Runs the application tests.
+- **`npm run coverage`**: Runs the tests and displays test coverage.
+- **`npm run test_watch`**: Runs the tests in watch mode.
 
-## Estrutura do Projeto
+## Project Structure
 
-├── assets # Imagens e outros recursos estáticos
+```
+├── assets         # Images and other static resources  
+├── components     # Reusable React components  
+├── screens        # Application screens  
+├── api            # Services and hooks for API calls  
+├── utils          # Utility functions  
+├── App.js         # Main application component  
+├── app.json       # Expo configuration  
+├── package.json   # Dependencies and npm scripts  
+└── README.md      # Project documentation  
+```
 
-├── components # Componentes reutilizáveis do React
+## Tests
 
-├── screens # Telas do aplicativo
-
-├── api # Serviços e hooks para chamadas de API
-
-├── utils # Funções utilitárias
-
-├── App.js # Componente principal do aplicativo
-
-├── app.json # Configurações do Expo
-
-├── package.json # Dependências e scripts do npm
-
-└── README.md # Documentação do projeto
-
-## Testes
-
-Os testes são escritos utilizando a biblioteca @testing-library/react-native.
-Para rodar os testes, use o seguinte comando:
+Tests are written using the @testing-library/react-native library.  
+To run the tests, use the following command:
 
 ```sh
 npm test
